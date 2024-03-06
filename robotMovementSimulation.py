@@ -151,3 +151,11 @@ class Agent:
                     came_from[new_state] = current_node.state
 
         return []
+    def reconstruct_path(self, came_from, current):
+        path = []
+        while current in came_from:
+            path.append(current)
+            current = came_from[current]
+        path.append(self.env.initial)  # Start node is not in came_from
+        path.reverse()  # Reverse to get the path from start to goal
+        return path
