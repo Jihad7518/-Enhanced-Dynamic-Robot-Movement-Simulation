@@ -98,3 +98,31 @@ class Environment:
     # Returns the current recharge count.
     def get_recharge_count(self):
         return self.recharge_count
+
+class Agent:
+    def __init__(self, env):
+        self.env = env
+
+    # Performs Uniform Cost Search to find the lowest cost path from the initial state to the goal.
+    def uniform_cost_search(self):
+        frontier = PriorityQueue()  # Priority queue for UCS.
+        frontier.put(Node(self.env.initial, path_cost=0), 0)
+        came_from = {self.env.initial: None}
+        cost_so_far = {self.env.initial: 0}
+
+        while not frontier.empty():
+            current_node = frontier.get()
+
+            if self.env.is_goal(current_node.state):
+                return self.reconstruct_path(came_from, current_node.state)
+
+            for action in self.env.actions(current_node.state):
+                new_state = self.env.result(current_node.state, action)
+                new_cost = cost_so_far[current_node.state] + 1  # Assuming uniform cost for simplicity; adjust if varying costs.
+                if new_state not in cost_so_far or new_cost < cost_so_far[new_state]:
+                    cost_so_far[new_state] = new_cost
+                    priority = new_cost
+                    frontier.put(Node(new_state, current_node, action, new_cost), priority)
+                    came_from[new_state] = current_node.state
+
+        return []
