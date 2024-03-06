@@ -5,7 +5,7 @@ This repository contains the Python code for the Pathfinding Robot Simulation pr
 
 Instructions
 1. Clone the Repository:
-   git clone https://github.com/yourusername/pathfinding-robot-simulation.git
+   git clone https:....
    cd pathfinding-robot-simulation
 2. Install Dependencies:
    pip install -r requirements.txt  
