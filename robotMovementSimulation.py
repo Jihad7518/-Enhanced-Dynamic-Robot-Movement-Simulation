@@ -32,3 +32,11 @@ class Node:
     # Comparison operator for the priority queue.
     def __lt__(self, other):
         return self.path_cost < other.path_cost
+
+
+#Calculate the Manhattan distance between two points a and b.
+def heuristic(a, b):
+    (x1, y1) = a  #a: Tuple representing the x and y coordinates of point a (e.g., (x1, y1))
+    (x2, y2) = b  #Calculate the Manhattan distance between two points a and b.
+    return abs(x1 - x2) + abs(y1 - y2) #Returns: - The Manhattan distance between points a and b.
+
