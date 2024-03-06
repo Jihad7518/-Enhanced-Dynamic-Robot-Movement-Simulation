@@ -1,5 +1,4 @@
-
-
+# Runed in Google colab Notebook
 #Enhanced Dynamic Robot Movement Simulation**
 
 
@@ -34,11 +33,14 @@ class Node:
         return self.path_cost < other.path_cost
 
 
+
 #Calculate the Manhattan distance between two points a and b.
 def heuristic(a, b):
     (x1, y1) = a  #a: Tuple representing the x and y coordinates of point a (e.g., (x1, y1))
     (x2, y2) = b  #Calculate the Manhattan distance between two points a and b.
     return abs(x1 - x2) + abs(y1 - y2) #Returns: - The Manhattan distance between points a and b.
+
+
 
 # Environment Class represents the grid and handles state transitions.
 class Environment:
@@ -66,7 +68,7 @@ class Environment:
 
         return possible_actions
 
-# Returns the state resulting from taking a given action at a given state.
+    # Returns the state resulting from taking a given action at a given state.
     def result(self, state, action):
         x, y = state
 
@@ -91,6 +93,7 @@ class Environment:
     def recharge_battery(self):
         self.battery_level = 100
         self.recharge_count += 1
+
     # Checks if the goal has been reached.
     def is_goal(self, state):
         return state == self.goal
@@ -151,6 +154,7 @@ class Agent:
                     came_from[new_state] = current_node.state
 
         return []
+
     def reconstruct_path(self, came_from, current):
         path = []
         while current in came_from:
@@ -159,6 +163,7 @@ class Agent:
         path.append(self.env.initial)  # Start node is not in came_from
         path.reverse()  # Reverse to get the path from start to goal
         return path
+
 # Visualization Function plots the grid and the found path.
 def visualize_grid_and_path(grid, path):
     grid_array = np.array(grid)  # Convert grid to numpy array for easy plotting.
@@ -177,7 +182,6 @@ def visualize_grid_and_path(grid, path):
     ax.tick_params(which="minor", size=0)
     ax.tick_params(which="major", bottom=False, left=False, labelbottom=False, labelleft=False)
     plt.show()
-
 
 # Define the grid, start position, and goal position
 grid = [
