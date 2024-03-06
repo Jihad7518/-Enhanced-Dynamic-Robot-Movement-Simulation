@@ -40,3 +40,29 @@ def heuristic(a, b):
     (x2, y2) = b  #Calculate the Manhattan distance between two points a and b.
     return abs(x1 - x2) + abs(y1 - y2) #Returns: - The Manhattan distance between points a and b.
 
+# Environment Class represents the grid and handles state transitions.
+class Environment:
+    def __init__(self, grid, start, goal):
+        self.grid = grid  # Represents the grid layout where 1 represents an obstacle and 0 is free space.
+        self.initial = start  # Represents the starting position of the agent.
+        self.goal = goal  # Represents the goal position the agent aims to reach.
+        self.battery_level = 100  # Initializes the battery level to 100%.
+        self.recharge_count = 0  # Initializes the recharge count to 0.
+
+    # Returns the possible actions from a given state.
+    def actions(self, state):
+        possible_actions = ['UP', 'DOWN', 'LEFT', 'RIGHT']
+        x, y = state
+
+        # Eliminates impossible actions based on grid boundaries and obstacles.
+        if x == 0 or self.grid[x - 1][y] == 1:
+            possible_actions.remove('UP')
+        if x == len(self.grid) - 1 or self.grid[x + 1][y] == 1:
+            possible_actions.remove('DOWN')
+        if y == 0 or self.grid[x][y - 1] == 1:
+            possible_actions.remove('LEFT')
+        if y == len(self.grid[0]) - 1 or self.grid[x][y + 1] == 1:
+            possible_actions.remove('RIGHT')
+
+        return possible_actions
+        
