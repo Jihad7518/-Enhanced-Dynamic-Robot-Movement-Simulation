@@ -177,3 +177,48 @@ def visualize_grid_and_path(grid, path):
     ax.tick_params(which="minor", size=0)
     ax.tick_params(which="major", bottom=False, left=False, labelbottom=False, labelleft=False)
     plt.show()
+
+
+# Define the grid, start position, and goal position
+grid = [
+    [0, 0, 0, 1, 0],
+    [0, 1, 0, 1, 0],
+    [0, 1, 0, 0, 0],
+    [0, 0, 0, 1, 1],
+    [0, 1, 0, 0, 0]
+]
+
+start = (0, 0)
+goal = (4, 4)
+
+# Create the environment and agent for Uniform Cost Search
+environment_for_ucs = Environment(grid, start, goal)
+agent = Agent(environment_for_ucs)
+
+# Solve the problem with Uniform Cost Search
+solution_path_ucs = agent.uniform_cost_search()
+recharge_count_ucs = environment_for_ucs.get_recharge_count()
+print("UCS Solution Path:", solution_path_ucs)
+print("UCS Battery Recharge Count:", recharge_count_ucs)
+
+# Create the environment and agent for A* algorithm
+environment_for_astar = Environment(grid, start, goal)
+agent = Agent(environment_for_astar)
+
+# Solve the problem with the A* algorithm
+solution_path_astar = agent.a_star_search()
+recharge_count_astar = environment_for_astar.get_recharge_count()
+print("A* Solution Path:", solution_path_astar)
+print("A* Battery Recharge Count:", recharge_count_astar)
+
+# Compare recharge counts and determine the best algorithm
+if recharge_count_ucs < recharge_count_astar:
+    print("Uniform Cost Search is better.")
+elif recharge_count_astar < recharge_count_ucs:
+    print("A* Search is better.")
+else:
+    print("Both UCS and A* are same effective.")
+
+# Visualize the solution
+visualize_grid_and_path(grid, solution_path_ucs)
+visualize_grid_and_path(grid, solution_path_astar)
