@@ -159,3 +159,21 @@ class Agent:
         path.append(self.env.initial)  # Start node is not in came_from
         path.reverse()  # Reverse to get the path from start to goal
         return path
+# Visualization Function plots the grid and the found path.
+def visualize_grid_and_path(grid, path):
+    grid_array = np.array(grid)  # Convert grid to numpy array for easy plotting.
+    fig, ax = plt.subplots()
+    ax.set_facecolor('black')  # Set the background color to black.
+    ax.imshow(grid_array, cmap='Blues', alpha=0.3)  # Blue grid overlay.
+    start = path[0]
+    goal = path[-1]
+    ax.plot(start[1], start[0], 'rs', markersize=10)  # Start position in red.
+    ax.plot(goal[1], goal[0], 'gs', markersize=10)  # Goal position in green.
+    xs, ys = zip(*path)  # Extract X and Y coordinates of the path.
+    ax.plot(ys, xs, 'm-', linewidth=2)  # Plot the path in magenta.
+    ax.set_xticks(np.arange(-.5, len(grid[0]), 1), minor=True)
+    ax.set_yticks(np.arange(-.5, len(grid), 1), minor=True)
+    ax.grid(which="minor", color="black", linestyle='-', linewidth=1)  # Dark grid lines.
+    ax.tick_params(which="minor", size=0)
+    ax.tick_params(which="major", bottom=False, left=False, labelbottom=False, labelleft=False)
+    plt.show()
