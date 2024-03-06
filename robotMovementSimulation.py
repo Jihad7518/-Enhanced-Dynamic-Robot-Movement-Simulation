@@ -91,3 +91,10 @@ class Environment:
     def recharge_battery(self):
         self.battery_level = 100
         self.recharge_count += 1
+    # Checks if the goal has been reached.
+    def is_goal(self, state):
+        return state == self.goal
+
+    # Returns the current recharge count.
+    def get_recharge_count(self):
+        return self.recharge_count
