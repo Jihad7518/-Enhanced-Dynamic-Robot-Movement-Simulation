@@ -65,4 +65,29 @@ class Environment:
             possible_actions.remove('RIGHT')
 
         return possible_actions
-        
+
+# Returns the state resulting from taking a given action at a given state.
+    def result(self, state, action):
+        x, y = state
+
+        if action == 'UP':
+            new_state = (x - 1, y)
+        elif action == 'DOWN':
+            new_state = (x + 1, y)
+        elif action == 'LEFT':
+            new_state = (x, y - 1)
+        elif action == 'RIGHT':
+            new_state = (x, y + 1)
+
+        # Updates the battery level.
+        self.battery_level -= 10
+        if self.battery_level <= 0:
+            # Requires the robot to recharge before continuing.
+            self.recharge_battery()
+
+        return new_state
+
+    # Recharges the battery level to 100%.
+    def recharge_battery(self):
+        self.battery_level = 100
+        self.recharge_count += 1
