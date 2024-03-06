@@ -126,3 +126,28 @@ class Agent:
                     came_from[new_state] = current_node.state
 
         return []
+
+    def a_star_search(self):
+        # The start node is created with a path cost of 0.
+        start_node = Node(self.env.initial, path_cost=0)
+        frontier = PriorityQueue()
+        frontier.put(start_node, 0)  # Priority is f-cost, initially the heuristic cost from start to goal
+        came_from = {self.env.initial: None}  # Tracks the best path to a node
+        cost_so_far = {self.env.initial: 0}  # Tracks the g-cost (cost so far to reach a node)
+
+        while not frontier.empty():
+            current_node = frontier.get()
+
+            if self.env.is_goal(current_node.state):
+                return self.reconstruct_path(came_from, current_node.state)
+
+            for action in self.env.actions(current_node.state):
+                new_state = self.env.result(current_node.state, action)
+                new_cost = cost_so_far[current_node.state] + 1  # Assuming uniform cost for simplicity
+                if new_state not in cost_so_far or new_cost < cost_so_far[new_state]:
+                    cost_so_far[new_state] = new_cost
+                    priority = new_cost + heuristic(new_state, self.env.goal)  # f-cost = g-cost + h-cost
+                    frontier.put(Node(new_state, current_node, action, new_cost), priority)
+                    came_from[new_state] = current_node.state
+
+        return []
